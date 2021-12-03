@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
+
+    <title>Drag and Drop</title>
+  </head>
+  <body>
+    <section class="dragDropBox">
+      <h1 class="boxHeader">Drag & Drop</h1>
+
+      <section class="boxContainer">
+        <div class="questionContainer">
+          <p class="question">
+            Arrange the world cup winning team in a chronological order
+          </p>
+        </div>
+        <div class="subContainer">
+          <div class="choice">
+            <p class="optionBox" id="1" draggable="true">West Indies</p>
+            <p class="optionBox" id="2" draggable="true">India</p>
+            <p class="optionBox" id="3" draggable="true">Pakistan</p>
+            <p class="optionBox" id="4" draggable="true">Australia</p>
+          </div>
+
+          <div class="choice"></div>
+        </div>
+      </section>
+    </section>
+  </body>
+</html>
+
+<script type="text/javascript">
+  let p = document.getElementsByTagName("p");
+
+  let choice = document.getElementsByClassName("choice");
+
+  let dragItem = null;
+
+  function dragStart() {
+    dragItem = this;
+    setTimeout(() => (this.style.display = "none"), 0);
+  }
+
+  function dragEnd(e) {
+    setTimeout(() => (this.style.display = "block"), 0);
+
+    dragItem = null;
+  }
+
+  for (var i of p) {
+    i.addEventListener("dragstart", dragStart);
+    i.addEventListener("dragend", dragEnd);
+  }
+
+  for (j of choice) {
+    j.addEventListener("dragover", dragOver);
+    j.addEventListener("dragenter", dragEnter);
+    j.addEventListener("dragleave", dragLeave);
+    j.addEventListener("drop", drop);
+  }
+  function drop() {
+    this.append(dragItem);
+
+    if (this.children.length === 4) {
+      if (
+        this.children[0].id === "1" &&
+        this.children[1].id === "2" &&
+        this.children[2].id === "3" &&
+        this.children[3].id === "4"
+      ) {
+        this.style.background = "green";
+        setTimeout(() => {
+          alert("Perfect correct answer");
+        }, 0);
+      } else {
+        this.style.background = "red";
+        setTimeout(() => {
+          alert("Oh Oh! wrong answer");
+        }, 0);
+      }
+    }
+  }
+
+  function dragOver(e) {
+    e.preventDefault();
+  }
+
+  function dragEnter(e) {
+    e.preventDefault();
+  }
+  function dragLeave() {}
+</script>
